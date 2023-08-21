@@ -1,0 +1,8 @@
+.todo-list li button.icon-edit {
+	font-size: 19px;
+	right: 45px;
+}
+
+.todo-list li .icon-edit:after {
+	content: '✎';
+}

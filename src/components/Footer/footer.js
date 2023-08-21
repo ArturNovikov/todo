@@ -1,12 +1,11 @@
 import React from "react";
 import './footer.css';
 
-import TaskFilter from "../TasksFilter";
+import TaskFilter from "./TasksFilter";
 
 const Footer = () => {
 
   return (
-
     <footer className="footer">
       <span className="todo-count">1 items left</span>
         <ul className="filters">
@@ -14,7 +13,6 @@ const Footer = () => {
         </ul>
       <button className="clear-completed">Clear completed</button>
     </footer>
-
   );
 };
 

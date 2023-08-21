@@ -16,6 +16,7 @@ const TaskFilter = () => {
       </li>
     </div>
   );
+  
 };
 
 export default TaskFilter;

@@ -5,11 +5,9 @@ import "./taskLabel.css";
 const TaskLabel = ({ description }) => {
 
     return (
-
-    <label>
-        <span className="description">{ description }</span>
-    </label>
-
+        <label>
+            <span className="description">{ description }</span>
+        </label>
     );
 
 };

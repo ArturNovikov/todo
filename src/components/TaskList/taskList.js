@@ -15,7 +15,6 @@ const TaskList = ({ tasks }) => {
         );
     });
 
-
     return (
         <ul className="todo-list">
             { elements }
