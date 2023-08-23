@@ -7,17 +7,19 @@ import TaskInputForEdit from "./TaskInputForEdit";
 
 import "./task.css";
 
-const Task = ({ description, completed, status, onStatusChange }) => {
-    
+const Task = ({ description, completed, status, onStatusChange, onDeleted }) => {
+
     return (
+        
         <li className={ status }>
             <div className="view">
-                <TaskInput completed={completed} onStatusChange={ onStatusChange }/>
-                <TaskLabel description={description} />
+                <TaskInput completed={ completed } onStatusChange={ onStatusChange }/>
+                <TaskLabel description={ description } />
                 <TaskButtonEdit />
-                <TaskButtonDestroy />
+                <TaskButtonDestroy 
+                onDeleted={ onDeleted }/>
             </div>
-            <TaskInputForEdit status={status} description={description}/>
+            <TaskInputForEdit status={ status } description={ description }/>
         </li>
     );
 

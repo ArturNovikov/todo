@@ -16,14 +16,29 @@ export default class App extends Component {
     };
 
     onTaskStatusChange = (id, newCompletedStatus) => {
-        this.setState(prevState => ({
-            tasks: prevState.tasks.map(task =>
-                task.id === id ? { ...task, completed: newCompletedStatus, status: newCompletedStatus ? 'completed' : 'active' } : task
-            ),
+        this.setState(({ tasks }) => ({
+            tasks: tasks.map( task =>
+                task.id !== id ? task : { ...task,
+                completed: newCompletedStatus,
+                status: newCompletedStatus ? 'completed' : 'active'}),
         }));
     };
-    
 
+    deleteItem = (id) => {
+        this.setState(({ tasks }) => {
+    
+          const idx = tasks.findIndex((el) => el.id === id);
+    
+          const newArray = [
+            ...tasks.slice(0, idx), 
+            ...tasks.slice(idx + 1)
+          ];
+    
+          return {
+            tasks: newArray
+          };
+        });
+      };
 
     render() {
         return (
@@ -37,6 +52,7 @@ export default class App extends Component {
                     <TaskList 
                         tasks={ this.state.tasks }
                         onTaskStatusChange = { this.onTaskStatusChange }
+                        onDeleted = { this.deleteItem }
                     />
                     <Footer />
                 </section>

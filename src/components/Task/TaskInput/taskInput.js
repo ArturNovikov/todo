@@ -7,7 +7,7 @@ export default class TaskInput extends Component {
     super(props);
         this.state = {
             completed: props.completed || false
-        }
+        };
    };
 
     onCheckboxClick = () => {
@@ -24,7 +24,7 @@ export default class TaskInput extends Component {
                 defaultChecked={this.props.completed}
                 onClick={ this.onCheckboxClick } 
             />
-            
         );
+
     };
 };

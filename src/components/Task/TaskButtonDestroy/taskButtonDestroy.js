@@ -1,13 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 
 import "./taskButtonDestroy.css";
 
-const TaskButtonDestroy = () => {
+export default class TaskButtonDestroy extends Component {
 
-    return (
-        <button className="icon icon-destroy"></button>
-    );
+    
 
+    render() {
+
+        const { onDeleted } = this.props;
+
+        return (
+            <button 
+                className="icon icon-destroy"
+                onClick={ onDeleted }
+            ></button>
+        );
+    };
 };
-
-export default TaskButtonDestroy;
