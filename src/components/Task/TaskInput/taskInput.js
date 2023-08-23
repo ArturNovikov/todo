@@ -1,12 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
+
 import "./taskInput.css";
 
-const TaskInput = ({ completed = false }) => {
+export default class TaskInput extends Component {
+   constructor(props) {
+    super(props);
+        this.state = {
+            completed: props.completed || false
+        }
+   };
 
-    return (
-        <input className="toggle" type="checkbox" checked={completed} readOnly />
-    );
+    onCheckboxClick = () => {
+        const newCompletedStatus = !this.props.completed;
+        this.props.onStatusChange(newCompletedStatus);
+    };
 
+    render() {
+
+        return (
+            <input 
+                className="toggle" 
+                type="checkbox" 
+                defaultChecked={this.props.completed}
+                onClick={ this.onCheckboxClick } 
+            />
+            
+        );
+    };
 };
-
-export default TaskInput;

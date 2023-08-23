@@ -7,12 +7,12 @@ import TaskInputForEdit from "./TaskInputForEdit";
 
 import "./task.css";
 
-const Task = ({ description, completed, status }) => {
+const Task = ({ description, completed, status, onStatusChange }) => {
     
     return (
         <li className={ status }>
             <div className="view">
-                <TaskInput completed={completed}/>
+                <TaskInput completed={completed} onStatusChange={ onStatusChange }/>
                 <TaskLabel description={description} />
                 <TaskButtonEdit />
                 <TaskButtonDestroy />

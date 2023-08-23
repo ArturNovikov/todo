@@ -2,7 +2,7 @@ import React from "react";
 import './taskList.css'
 import Task from "../Task";
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, onTaskStatusChange  }) => {
 
     const elements = tasks.map((task) => {
         const { id, ...taskProps } = task;
@@ -11,6 +11,7 @@ const TaskList = ({ tasks }) => {
             <Task 
                 key={ id }
                 {...taskProps}
+                onStatusChange={ (newCompletedStatus) => onTaskStatusChange(id, newCompletedStatus) }
             />
         );
     });

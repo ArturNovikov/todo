@@ -1,33 +1,48 @@
-
+import React, { Component } from 'react';
 import NewTaskForm from '../NewTaskForm';
 import AppHeader from '../appHeader';
 import TaskList from '../TaskList';
 import Footer from '../Footer'
 import './app.css'
 
-const App = () => {
+export default class App extends Component {
 
-    const tasks = [
-        { description: 'Completed task', completed: true, status: 'completed', id: 'Compl' },
-        { description: 'Editing task', completed: false, status: 'editing', id: 'Ed' },
-        { description: 'Active task', completed: false, status: 'active', id: 'Ac' },
-    ];
+    state = {
+        tasks: [
+            { description: 'Completed task', completed: true, status: 'completed', id: 1 },
+            { description: 'Editing task', completed: false, status: 'editing', id: 2 },
+            { description: 'Active task', completed: false, status: 'active', id: 3},
+        ]
+    };
 
-    return (
-        <div>
-        <section className='todoapp'>
-            <header className='header'>
-                <AppHeader />
-                <NewTaskForm />
-            </header>
-            <section className='main'>
-                <TaskList tasks={ tasks } />
-                <Footer />
+    onTaskStatusChange = (id, newCompletedStatus) => {
+        this.setState(prevState => ({
+            tasks: prevState.tasks.map(task =>
+                task.id === id ? { ...task, completed: newCompletedStatus, status: newCompletedStatus ? 'completed' : 'active' } : task
+            ),
+        }));
+    };
+    
+
+
+    render() {
+        return (
+            <div>
+            <section className='todoapp'>
+                <header className='header'>
+                    <AppHeader />
+                    <NewTaskForm />
+                </header>
+                <section className='main'>
+                    <TaskList 
+                        tasks={ this.state.tasks }
+                        onTaskStatusChange = { this.onTaskStatusChange }
+                    />
+                    <Footer />
+                </section>
             </section>
-        </section>
-        </div>
-    );
-
+            </div>
+        );
+    };
 };
 
-export default App;
