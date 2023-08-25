@@ -7,6 +7,8 @@ import './app.css'
 
 export default class App extends Component {
 
+    maxId = 100;
+
     state = {
         tasks: [
             { description: 'Completed task', completed: true, status: 'completed', id: 1 },
@@ -39,6 +41,29 @@ export default class App extends Component {
           };
         });
       };
+    
+    addItem = (text) => {
+    
+    const newItem = {
+        description: text,
+        completed: false,
+        status: 'active',
+        id: this.maxId++
+    }
+
+    this.setState(({ tasks }) => {
+        
+        const newArr = [
+            ...tasks,
+            newItem
+        ];
+
+        return {
+            tasks: newArr
+            };
+
+        });
+    };
 
     render() {
         return (
@@ -46,7 +71,7 @@ export default class App extends Component {
             <section className='todoapp'>
                 <header className='header'>
                     <AppHeader />
-                    <NewTaskForm />
+                    <NewTaskForm onItemAdded = { this.addItem }/>
                 </header>
                 <section className='main'>
                     <TaskList 
