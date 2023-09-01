@@ -1,17 +1,42 @@
-import React from "react";
-import "./taskInputForEdit.css";
+import React, { Component } from 'react';
+import './taskInputForEdit.css';
 
-const TaskInputForEdit = ({ status, description }) => {
+export default class TaskInputForEdit extends Component {
 
-    return (
-        status === "editing" && 
-        <input 
-            type="text" 
-            className="edit"
-            defaultValue={description} 
-        />
-    );
+    constructor(props) {
+      super(props);
+        this.state = {
+            inputValue: '',
+        };
+    };
 
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.onInputSubmit(this.props.status);
+    };
+
+    onChangeInput = (e) => {
+        const newInputValue = e.target.value;
+        this.setState({
+                inputValue: newInputValue,
+        });
+
+        this.props.onInputChange(newInputValue);
+    };
+
+    render() {
+
+        return (
+            <form onSubmit={ this.onSubmit }>
+                <input 
+                    name='editingTaskForm'
+                    type='text'
+                    className='edit'
+                    value={ this.state.inputValue }
+                    onChange={ this.onChangeInput }
+                />
+            </form>
+        );
+    };
+    
 };
-
-export default TaskInputForEdit;

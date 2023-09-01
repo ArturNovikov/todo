@@ -4,8 +4,6 @@ import "./taskButtonDestroy.css";
 
 export default class TaskButtonDestroy extends Component {
 
-    
-
     render() {
 
         const { onDeleted } = this.props;
@@ -13,8 +11,8 @@ export default class TaskButtonDestroy extends Component {
         return (
             <button 
                 className="icon icon-destroy"
-                onClick={ onDeleted }
-            ></button>
+                onClick={ onDeleted }>
+            </button>
         );
     };
 };

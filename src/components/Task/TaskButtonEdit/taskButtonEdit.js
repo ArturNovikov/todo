@@ -1,13 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 
 import "./taskButtonEdit.css";
 
-const TaskButtonEdit = () => {
+export default class TaskButtonEdit extends Component {
 
-    return (
-        <button className="icon icon-edit"></button>
-    );
+    render() {
 
+        const { onEdit } = this.props;
+
+        return (
+            <button 
+                className="icon icon-edit"
+                onClick={ onEdit } >
+            </button>
+        );
+    };
 };
-
-export default TaskButtonEdit;

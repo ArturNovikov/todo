@@ -17,6 +17,24 @@ export default class App extends Component {
         ]
     };
 
+    handleInputValueChange = (id, newInputValue) => {
+        this.setState(({ tasks }) => ({
+            tasks: tasks.map ( task => 
+                task.id !== id ? task : { ...task, 
+                description: newInputValue
+            })
+        }));
+    };
+
+    onSubmitChange = (id, newStatus) => {
+        this.setState(({ tasks }) => ({
+            tasks: tasks.map( task => 
+                task.id !== id ? task : { ...task,
+                    status: 'active'
+            })
+        }));
+    };
+
     onTaskStatusChange = (id, newCompletedStatus) => {
         this.setState(({ tasks }) => ({
             tasks: tasks.map( task =>
@@ -25,6 +43,15 @@ export default class App extends Component {
                 status: newCompletedStatus ? 'completed' : 'active'}),
         }));
     };
+
+    onEdit = (id) => {
+        this.setState(({tasks}) => ({
+            tasks: tasks.map( task => 
+                task.id !== id ? task : { ...task,
+                status: 'editing'
+            }),
+        }));
+    }
 
     deleteItem = (id) => {
         this.setState(({ tasks }) => {
@@ -44,27 +71,27 @@ export default class App extends Component {
     
     addItem = (text) => {
     
-    const newItem = {
-        description: text,
-        completed: false,
-        status: 'active',
-        id: this.maxId++
-    }
+        const newItem = {
+            description: text,
+            completed: false,
+            status: 'active',
+            id: this.maxId++
+        };
 
-    this.setState(({ tasks }) => {
-        
-        const newArr = [
-            ...tasks,
-            newItem
-        ];
+        this.setState(({ tasks }) => {
+            
+            const newArr = [
+                ...tasks,
+                newItem
+            ];
 
-        return {
-            tasks: newArr
+            return {
+                tasks: newArr
             };
 
         });
     };
-
+    
     render() {
         return (
             <div>
@@ -78,6 +105,12 @@ export default class App extends Component {
                         tasks={ this.state.tasks }
                         onTaskStatusChange = { this.onTaskStatusChange }
                         onDeleted = { this.deleteItem }
+                        onEdit={ this.onEdit }
+/*                         onTaskEdited={ this.onTaskEdited }
+                        onDescriptionChangeFunc={ this.onDescriptionChangeFunc }
+                        changeStatusToActive={ this.changeStatusToActive }  */
+                        onInputChange = { this.handleInputValueChange }
+                        onInputSubmit = { this.onSubmitChange }
                     />
                     <Footer />
                 </section>
