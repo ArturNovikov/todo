@@ -14,9 +14,16 @@ export default class App extends Component {
             { description: 'Completed task', completed: true, status: 'completed', id: 1 },
             { description: 'Editing task', completed: false, status: 'editing', id: 2 },
             { description: 'Active task', completed: false, status: 'active', id: 3},
-        ]
+        ],
+        activeFilter: 'All', 
     };
 
+    changeFilter = (newFilter) => {
+        this.setState({
+            activeFilter: newFilter,
+        })
+    };
+ 
     handleInputValueChange = (id, newInputValue) => {
         this.setState(({ tasks }) => ({
             tasks: tasks.map ( task => 
@@ -26,7 +33,7 @@ export default class App extends Component {
         }));
     };
 
-    onSubmitChange = (id, newStatus) => {
+    onSubmitChange = (id) => {
         this.setState(({ tasks }) => ({
             tasks: tasks.map( task => 
                 task.id !== id ? task : { ...task,
@@ -93,6 +100,22 @@ export default class App extends Component {
     };
     
     render() {
+
+        const { tasks, activeFilter } = this.state;
+
+        const filteredTasks = tasks.filter(task => {
+            switch(activeFilter) {
+                case 'All':
+                    return true;
+                case 'Active':
+                    return !task.completed;
+                case 'Completed':
+                    return task.completed;
+                default:
+                    return true;
+            }
+        });
+
         return (
             <div>
             <section className='todoapp'>
@@ -102,17 +125,16 @@ export default class App extends Component {
                 </header>
                 <section className='main'>
                     <TaskList 
-                        tasks={ this.state.tasks }
+                        tasks={ filteredTasks }
                         onTaskStatusChange = { this.onTaskStatusChange }
                         onDeleted = { this.deleteItem }
                         onEdit={ this.onEdit }
-/*                         onTaskEdited={ this.onTaskEdited }
-                        onDescriptionChangeFunc={ this.onDescriptionChangeFunc }
-                        changeStatusToActive={ this.changeStatusToActive }  */
                         onInputChange = { this.handleInputValueChange }
                         onInputSubmit = { this.onSubmitChange }
                     />
-                    <Footer />
+                    <Footer 
+                        changeFilter = { this.changeFilter }
+                    />
                 </section>
             </section>
             </div>

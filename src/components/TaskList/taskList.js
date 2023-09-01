@@ -17,7 +17,7 @@ class TaskList extends Component {
             onDeleted={ () => onDeleted(id) }
             onEdit={ () => onEdit(id) }
             onInputChange={ (newInputValue) => onInputChange(id, newInputValue) }
-            onInputSubmit={ (newStatus) => onInputSubmit(id, newStatus) }
+            onInputSubmit={ () => onInputSubmit(id) }
         />
     );
 

@@ -12,7 +12,7 @@ export default class TaskInputForEdit extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.onInputSubmit(this.props.status);
+        this.props.onInputSubmit();
     };
 
     onChangeInput = (e) => {
