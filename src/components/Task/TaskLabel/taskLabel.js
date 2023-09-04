@@ -17,12 +17,12 @@ const TaskLabel = ({ description, created }) => {
 
 TaskLabel.propTypes = {
     description: PropTypes.string,
-    created: PropTypes.string
+    created: PropTypes.string,
 };
 
 TaskLabel.defaultProps = {
-    description: '',
-    created: new Date().toISOString()
+    description: 'I need some description!',
+    created: new Date().toISOString(),
 };
 
 

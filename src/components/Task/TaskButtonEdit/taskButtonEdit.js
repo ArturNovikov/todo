@@ -1,8 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import "./taskButtonEdit.css";
+import './taskButtonEdit.css';
 
 export default class TaskButtonEdit extends Component {
+
+
+    static propTypes = {
+        onEdit: PropTypes.func,
+    };
+
+    static defaultProps = {
+        onEdit: () => {},
+    };
 
     render() {
 

@@ -1,11 +1,28 @@
-import React, { Component } from "react";
-import './taskList.css'
-import Task from "../Task";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './taskList.css';
+import Task from '../Task';
 
-class TaskList extends Component {
+export default class TaskList extends Component {
+
+    static propTypes = {
+        tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+        onTaskStatusChange: PropTypes.func.isRequired,
+        onDeleted: PropTypes.func,
+        onEdit: PropTypes.func,
+        onInputChange: PropTypes.func,
+        onInputSubmit: PropTypes.func,
+    };
+
+    static defaultProps = {
+        onDeleted: () => {},
+        onEdit: () => {},
+        onInputChange: () => {},
+        onInputSubmit: () => {},
+    };
 
     render() {
-        const { tasks, onTaskStatusChange, onDeleted, onEdit,onInputChange, onInputSubmit } = this.props;
+        const { tasks, onTaskStatusChange, onDeleted, onEdit, onInputChange, onInputSubmit } = this.props;
         const elements = tasks.map((task) => {
             const { id, ...taskProps } = task;
             
@@ -24,11 +41,9 @@ class TaskList extends Component {
         });
 
         return (
-            <ul className="todo-list">
+            <ul className='todo-list'>
                 { elements }
             </ul>
         );
     };
 };
-
-export default TaskList;

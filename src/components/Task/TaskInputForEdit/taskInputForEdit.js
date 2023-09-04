@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './taskInputForEdit.css';
-import { toHaveStyle } from '@testing-library/jest-dom/matchers';
-
 export default class TaskInputForEdit extends Component {
+
+    static propTypes = {
+        description: PropTypes.string,
+        onInputSubmit: PropTypes.func,
+        onInputChange: PropTypes.func,
+
+    };
+
+    static defaultProps = {
+        description: "I'm your task! Please, edit me!",
+        onInputSubmit: () => {},
+        onInputChange: () => {},
+    };
 
     constructor(props) {
       super(props);
@@ -46,6 +58,5 @@ export default class TaskInputForEdit extends Component {
                 />
             </form>
         );
-    };
-    
+    }; 
 };

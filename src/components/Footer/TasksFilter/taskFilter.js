@@ -1,7 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './taskFilter.css';
 
 export default class TaskFilter extends Component {
+
+  static propTypes = {
+    changeFilter: PropTypes.func,
+  };
+
+  static defaultProps = {
+    changeFilter: () => {},
+  };
 
   state = {
     activeButton: 'All'

@@ -1,9 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './footer.css';
 
 import TaskFilter from './TasksFilter';
 
 export default class Footer extends Component {
+
+  static propTypes = {
+    incompleteItems: PropTypes.number,
+    changeFilter: PropTypes.func,
+    clearCompleted: PropTypes.func,
+  };
+
+  static defaultProps = {
+    incompleteItems: 0,
+    changeFilter: () => {},
+    clearCompleted: () => {},
+  };
 
   render() {
     return (

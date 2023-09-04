@@ -1,8 +1,18 @@
-import React, { Component } from "react";
-
-import "./taskInput.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './taskInput.css';
 
 export default class TaskInput extends Component {
+
+    static propTypes = {
+        completed: PropTypes.bool,
+        onStatusChange: PropTypes.func,
+    };
+
+    static defaultProps = {
+        completed: false,
+        onStatusChange: () => {},
+    };
 
     onCheckboxClick = () => {
         const newCompletedStatus = !this.props.completed;
