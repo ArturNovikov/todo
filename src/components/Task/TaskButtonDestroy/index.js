@@ -1,3 +1,3 @@
-import TaskButtonDestroy from "./taskButtonDestroy";
+import TaskButtonDestroy from './taskButtonDestroy';
 
 export default TaskButtonDestroy;

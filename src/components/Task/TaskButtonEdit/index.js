@@ -1,3 +1,3 @@
-import TaskButtonEdit from "./taskButtonEdit";
+import TaskButtonEdit from './taskButtonEdit';
 
 export default TaskButtonEdit;

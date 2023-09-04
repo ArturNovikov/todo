@@ -4,25 +4,17 @@ import PropTypes from 'prop-types';
 import './taskButtonEdit.css';
 
 export default class TaskButtonEdit extends Component {
+  static propTypes = {
+    onEdit: PropTypes.func,
+  };
 
+  static defaultProps = {
+    onEdit: () => {},
+  };
 
-    static propTypes = {
-        onEdit: PropTypes.func,
-    };
+  render() {
+    const { onEdit } = this.props;
 
-    static defaultProps = {
-        onEdit: () => {},
-    };
-
-    render() {
-
-        const { onEdit } = this.props;
-
-        return (
-            <button 
-                className="icon icon-edit"
-                onClick={ onEdit } >
-            </button>
-        );
-    };
-};
+    return <button className="icon icon-edit" onClick={onEdit}></button>;
+  }
+}

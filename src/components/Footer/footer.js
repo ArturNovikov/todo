@@ -5,7 +5,6 @@ import './footer.css';
 import TaskFilter from './TasksFilter';
 
 export default class Footer extends Component {
-
   static propTypes = {
     incompleteItems: PropTypes.number,
     changeFilter: PropTypes.func,
@@ -22,14 +21,13 @@ export default class Footer extends Component {
     return (
       <footer className="footer">
         <span className="todo-count">{this.props.incompleteItems} items left</span>
-          <ul className="filters">
-            <TaskFilter changeFilter={ this.props.changeFilter }/>
-          </ul>
-        <button
-          className='clear-completed'
-          onClick={ this.props.clearCompleted }
-        >Clear completed</button>
+        <ul className="filters">
+          <TaskFilter changeFilter={this.props.changeFilter} />
+        </ul>
+        <button className="clear-completed" onClick={this.props.clearCompleted}>
+          Clear completed
+        </button>
       </footer>
     );
-  };
-};
+  }
+}

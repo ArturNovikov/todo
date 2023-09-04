@@ -2,61 +2,58 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './taskInputForEdit.css';
 export default class TaskInputForEdit extends Component {
+  static propTypes = {
+    description: PropTypes.string,
+    onInputSubmit: PropTypes.func,
+    onInputChange: PropTypes.func,
+  };
 
-    static propTypes = {
-        description: PropTypes.string,
-        onInputSubmit: PropTypes.func,
-        onInputChange: PropTypes.func,
+  static defaultProps = {
+    description: `I'm your task! Please, edit me!`,
+    onInputSubmit: () => {},
+    onInputChange: () => {},
+  };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: props.description,
     };
+  }
 
-    static defaultProps = {
-        description: "I'm your task! Please, edit me!",
-        onInputSubmit: () => {},
-        onInputChange: () => {},
-    };
+  componentDidUpdate(prevProps) {
+    if (this.props.description !== prevProps.description) {
+      this.setState({
+        inputValue: this.props.description,
+      });
+    }
+  }
 
-    constructor(props) {
-      super(props);
-        this.state = {
-            inputValue: props.description,
-        };
-    };
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onInputSubmit();
+  };
 
-    componentDidUpdate(prevProps) {
-        if (this.props.description !== prevProps.description) {
-            this.setState({
-                inputValue: this.props.description,
-            });
-        };
-    };
+  onChangeInput = (e) => {
+    const newInputValue = e.target.value;
+    this.setState({
+      inputValue: newInputValue,
+    });
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.onInputSubmit();
-    };
+    this.props.onInputChange(newInputValue);
+  };
 
-    onChangeInput = (e) => {
-        const newInputValue = e.target.value;
-        this.setState({
-                inputValue: newInputValue,
-        });
-
-        this.props.onInputChange(newInputValue);
-    };
-
-    render() {
-
-        return (
-            <form onSubmit={ this.onSubmit }>
-                <input 
-                    name='editingTaskForm'
-                    type='text'
-                    className='edit'
-                    value={ this.state.inputValue }
-                    onChange={ this.onChangeInput }
-                />
-            </form>
-        );
-    }; 
-};
+  render() {
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input
+          name="editingTaskForm"
+          type="text"
+          className="edit"
+          value={this.state.inputValue}
+          onChange={this.onChangeInput}
+        />
+      </form>
+    );
+  }
+}

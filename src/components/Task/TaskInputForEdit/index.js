@@ -1,3 +1,3 @@
-import TaskInputForEdit from "./taskInputForEdit";
+import TaskInputForEdit from './taskInputForEdit';
 
 export default TaskInputForEdit;
