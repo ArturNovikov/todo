@@ -111,6 +111,8 @@ export default class App extends Component {
 
         const { tasks, activeFilter } = this.state;
 
+        const incompleteItemsCount = tasks.filter( task => !task.completed).length;
+
         const filteredTasks = tasks.filter(task => {
             switch(activeFilter) {
                 case 'All':
@@ -143,6 +145,7 @@ export default class App extends Component {
                     <Footer 
                         changeFilter = { this.changeFilter }
                         clearCompleted= { this.clearCompleted }
+                        incompleteItems = { incompleteItemsCount }
                     />
                 </section>
             </section>
