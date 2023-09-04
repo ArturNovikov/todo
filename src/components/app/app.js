@@ -18,10 +18,19 @@ export default class App extends Component {
         activeFilter: 'All', 
     };
 
+    clearCompleted = () => {
+        this.setState(({ tasks }) => {
+            const stateCompleted = tasks.filter((task) => !task.completed );
+            return {
+                tasks: stateCompleted
+            };
+        });
+    };
+
     changeFilter = (newFilter) => {
         this.setState({
             activeFilter: newFilter,
-        })
+        });
     };
  
     handleInputValueChange = (id, newInputValue) => {
@@ -95,7 +104,6 @@ export default class App extends Component {
             return {
                 tasks: newArr
             };
-
         });
     };
     
@@ -134,6 +142,7 @@ export default class App extends Component {
                     />
                     <Footer 
                         changeFilter = { this.changeFilter }
+                        clearCompleted= { this.clearCompleted }
                     />
                 </section>
             </section>
