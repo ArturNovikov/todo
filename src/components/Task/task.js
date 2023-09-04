@@ -9,13 +9,13 @@ import "./task.css";
 
 class Task extends Component {
     render() {
-        const { description, completed, status, onStatusChange, onDeleted, onEdit, onInputChange, onInputSubmit } = this.props;
+        const { description, completed, status, onStatusChange, onDeleted, onEdit, onInputChange, onInputSubmit, created } = this.props;
         
         return (
             <li className={ status }>
                 <div className="view">
                     <TaskInput completed={ completed } onStatusChange={ onStatusChange } />
-                    <TaskLabel description={ description } />
+                    <TaskLabel description={ description } created={ created }/>
                     <TaskButtonEdit onEdit={ onEdit } />
                     <TaskButtonDestroy onDeleted={ onDeleted } />
                 </div>

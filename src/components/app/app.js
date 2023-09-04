@@ -10,11 +10,7 @@ export default class App extends Component {
     maxId = 100;
 
     state = {
-        tasks: [
-            { description: 'Completed task', completed: true, status: 'completed', id: 1 },
-            { description: 'Editing task', completed: false, status: 'editing', id: 2 },
-            { description: 'Active task', completed: false, status: 'active', id: 3},
-        ],
+        tasks: [],
         activeFilter: 'All', 
     };
 
@@ -91,7 +87,8 @@ export default class App extends Component {
             description: text,
             completed: false,
             status: 'active',
-            id: this.maxId++
+            id: this.maxId++,
+            created: new Date().toISOString() 
         };
 
         this.setState(({ tasks }) => {
@@ -111,7 +108,7 @@ export default class App extends Component {
 
         const { tasks, activeFilter } = this.state;
 
-        const incompleteItemsCount = tasks.filter( task => !task.completed).length;
+        const incompleteItemsCount = tasks.filter(task => !task.completed).length;
 
         const filteredTasks = tasks.filter(task => {
             switch(activeFilter) {
