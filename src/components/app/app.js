@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import React, { Component } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
@@ -6,6 +5,12 @@ import AppHeader from '../appHeader';
 import TaskList from '../TaskList';
 import Footer from '../Footer';
 import './app.css';
+
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed,
+};
 
 export default class App extends Component {
   maxId = 100;
@@ -91,18 +96,8 @@ export default class App extends Component {
   render() {
     const { tasks, activeFilter } = this.state;
     const incompleteItemsCount = tasks.filter((task) => !task.completed).length;
-    const filteredTasks = tasks.filter((task) => {
-      switch (activeFilter) {
-        case 'All':
-          return true;
-        case 'Active':
-          return !task.completed;
-        case 'Completed':
-          return task.completed;
-        default:
-          return true;
-      }
-    });
+    const filterFunction = FILTER_MAP[activeFilter] || FILTER_MAP.All;
+    const filteredTasks = tasks.filter(filterFunction);
 
     return (
       <div>

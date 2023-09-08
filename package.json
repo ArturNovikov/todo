@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "date-fns": "^2.30.0",
+    "nth-check": "^2.1.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,8 +22,10 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "lint": "eslint ./src/**/*.{js,jsx}",
-    "lint:fix": "eslint ./src/**/*.{js,jsx} --fix",
+    "lint-fix": "eslint --fix \"**/*.{js,jsx}\"",
     "format": "prettier --write ./src/**/*.{js,jsx}"
   },
   "eslintConfig": {
@@ -55,7 +58,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "svgo": "^2.8.0"
   },
   "husky": {
     "hooks": {
@@ -63,10 +67,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,jsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

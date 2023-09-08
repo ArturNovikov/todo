@@ -13,19 +13,28 @@ export default class NewTaskForm extends Component {
 
   state = {
     description: '',
+    error: null,
   };
 
   onDescriptionChange = (e) => {
     this.setState({
       description: e.target.value,
+      error: null,
     });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
+
+    if (!this.state.description.trim()) {
+      this.setState({ error: 'Task cannot be empty!' });
+      return;
+    }
+
     this.props.onItemAdded(this.state.description);
     this.setState({
       description: '',
+      error: null,
     });
   };
 
@@ -39,6 +48,7 @@ export default class NewTaskForm extends Component {
           value={this.state.description}
           onChange={this.onDescriptionChange}
         />
+        {this.state.error && <div style={{ color: 'red' }}>{this.state.error}</div>}
       </form>
     );
   }
