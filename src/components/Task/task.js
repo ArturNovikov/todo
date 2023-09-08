@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { formatDistanceToNow } from 'date-fns';
 
-import TaskInput from './TaskInput';
-import TaskLabel from './TaskLabel';
-import TaskButtonDestroy from './TaskButtonDestroy';
-import TaskButtonEdit from './TaskButtonEdit';
-import TaskInputForEdit from './TaskInputForEdit';
+import TaskInputForEdit from '../TaskInputForEdit';
 
 import './task.css';
 
@@ -34,17 +31,24 @@ export default class Task extends Component {
     created: new Date().toISOString(),
   };
 
+  onCheckboxClick = () => {
+    const newCompletedStatus = !this.props.completed;
+    this.props.onStatusChange(newCompletedStatus);
+  };
+
   render() {
-    const { description, completed, status, onStatusChange, onDeleted, onEdit, onInputChange, onInputSubmit, created } =
-      this.props;
+    const { description, status, onDeleted, onEdit, onInputChange, onInputSubmit, created } = this.props;
 
     return (
       <li className={status}>
         <div className="view">
-          <TaskInput completed={completed} onStatusChange={onStatusChange} />
-          <TaskLabel description={description} created={created} />
-          <TaskButtonEdit onEdit={onEdit} />
-          <TaskButtonDestroy onDeleted={onDeleted} />
+          <input className="toggle" type="checkbox" onClick={this.onCheckboxClick} />
+          <label>
+            <span className="description">{description}</span>
+            <span className="created">{formatDistanceToNow(new Date(created))} ago</span>
+          </label>
+          <button className="icon icon-edit" onClick={onEdit}></button>
+          <button className="icon icon-destroy" onClick={onDeleted}></button>
         </div>
         <TaskInputForEdit
           status={status}

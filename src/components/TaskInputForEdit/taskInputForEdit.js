@@ -14,23 +14,26 @@ export default class TaskInputForEdit extends Component {
     onInputChange: () => {},
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: props.description,
-    };
-  }
+  state = {
+    inputValue: this.props.description,
+    error: null,
+  };
 
   componentDidUpdate(prevProps) {
     if (this.props.description !== prevProps.description) {
       this.setState({
         inputValue: this.props.description,
+        error: null,
       });
     }
   }
 
   onSubmit = (e) => {
     e.preventDefault();
+    if (!this.state.inputValue.trim()) {
+      this.setState({ error: 'Task cannot be empty!' });
+      return;
+    }
     this.props.onInputSubmit();
   };
 
@@ -53,6 +56,11 @@ export default class TaskInputForEdit extends Component {
           value={this.state.inputValue}
           onChange={this.onChangeInput}
         />
+        {this.state.error && (
+          <div className="error" style={{ color: 'red', fontSize: '14px', lineHeight: '1.4em', fontWeight: 300 }}>
+            {this.state.error}
+          </div>
+        )}
       </form>
     );
   }
