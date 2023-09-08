@@ -27,7 +27,8 @@
     "prettier:fix": "prettier --write .",
     "lint": "eslint ./src/**/*.{js,jsx}",
     "lint-fix": "eslint --fix \"**/*.{js,jsx}\"",
-    "format": "prettier --write ./src/**/*.{js,jsx}"
+    "format": "prettier --write ./src/**/*.{js,jsx}",
+    "lint-staged": "lint-staged"
   },
   "eslintConfig": {
     "extends": [
