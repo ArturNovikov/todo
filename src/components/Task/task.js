@@ -42,7 +42,7 @@ export default class Task extends Component {
     return (
       <li className={status}>
         <div className="view">
-          <input className="toggle" type="checkbox" onClick={this.onCheckboxClick} />
+          <input className="toggle" type="checkbox" checked={this.props.completed} onClick={this.onCheckboxClick} />
           <label>
             <span className="description">{description}</span>
             <span className="created">{formatDistanceToNow(new Date(created))} ago</span>
