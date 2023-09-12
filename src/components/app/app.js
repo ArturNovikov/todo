@@ -43,7 +43,16 @@ export default class App extends Component {
 
   onSubmitChange = (id) => {
     this.setState(({ tasks }) => ({
-      tasks: tasks.map((task) => (task.id !== id ? task : { ...task, status: 'active' })),
+      tasks: tasks.map((task) => {
+        if (task.id !== id) {
+          return task;
+        }
+
+        const { completed } = task;
+        const newStatus = completed ? 'completed' : 'active';
+
+        return { ...task, status: newStatus };
+      }),
     }));
   };
 
