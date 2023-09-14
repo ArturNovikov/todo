@@ -84,13 +84,16 @@ export default class App extends Component {
     });
   };
 
-  addItem = (text) => {
+  addItem = (text, min, sec) => {
     const newItem = {
       description: text,
       completed: false,
       status: 'active',
       id: this.maxId++,
       created: new Date().toISOString(),
+      timer: 0,
+      isRunning: false,
+      timerAdded: Number(min) * 60 + Number(sec),
     };
 
     this.setState(({ tasks }) => {
@@ -100,6 +103,39 @@ export default class App extends Component {
         tasks: newArr,
       };
     });
+  };
+
+  onStartTimer = (id) => {
+    this.setState(({ tasks }) => ({
+      tasks: tasks.map((task) => (task.id !== id ? task : { ...task, isRunning: true })),
+    }));
+  };
+
+  onStopTimer = (id) => {
+    this.setState(({ tasks }) => ({
+      tasks: tasks.map((task) => (task.id !== id ? task : { ...task, isRunning: false })),
+    }));
+  };
+
+  onResetTimer = (id) => {
+    this.setState(({ tasks }) => ({
+      tasks: tasks.map((task) => (task.id !== id ? task : { ...task, isRunning: false, timer: 0 })),
+    }));
+  };
+
+  onTick = (id) => {
+    this.setState(({ tasks }) => ({
+      tasks: tasks.map((task) => {
+        if (task.id !== id) {
+          return task;
+        }
+        return { ...task, timer: task.timer + 1 };
+      }),
+    }));
+  };
+
+  handleNewTime = (min, sec) => {
+    console.log(min, sec);
   };
 
   render() {
@@ -113,7 +149,10 @@ export default class App extends Component {
         <section className="todoapp">
           <header className="header">
             <AppHeader />
-            <NewTaskForm onItemAdded={this.addItem} />
+            <NewTaskForm
+              onItemAdded={(text, min, sec) => this.addItem(text, min, sec)}
+              onTimeAdded={this.handleNewTime}
+            />
           </header>
           <section className="main">
             <TaskList
@@ -123,6 +162,10 @@ export default class App extends Component {
               onEdit={this.onEdit}
               onInputChange={this.handleInputValueChange}
               onInputSubmit={this.onSubmitChange}
+              onStartTimer={this.onStartTimer}
+              onStopTimer={this.onStopTimer}
+              onResetTimer={this.onResetTimer}
+              onTick={this.onTick}
             />
             <Footer
               changeFilter={this.changeFilter}

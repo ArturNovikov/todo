@@ -12,6 +12,9 @@ export default class TaskList extends Component {
     onEdit: PropTypes.func,
     onInputChange: PropTypes.func,
     onInputSubmit: PropTypes.func,
+    onTick: PropTypes.func,
+    onStartTimer: PropTypes.func,
+    onStopTimer: PropTypes.func,
   };
 
   static defaultProps = {
@@ -19,22 +22,38 @@ export default class TaskList extends Component {
     onEdit: () => {},
     onInputChange: () => {},
     onInputSubmit: () => {},
+    onTick: () => {},
+    onStartTimer: () => {},
+    onStopTimer: () => {},
   };
 
   render() {
-    const { tasks, onTaskStatusChange, onDeleted, onEdit, onInputChange, onInputSubmit } = this.props;
+    const {
+      tasks,
+      onTaskStatusChange,
+      onDeleted,
+      onEdit,
+      onInputChange,
+      onInputSubmit,
+      onTick,
+      onStartTimer,
+      onStopTimer,
+    } = this.props;
     const elements = tasks.map((task) => {
       const { id, ...taskProps } = task;
-
       return (
         <Task
           key={id}
+          id={id}
           {...taskProps}
           onStatusChange={(newCompletedStatus) => onTaskStatusChange(id, newCompletedStatus)}
           onDeleted={() => onDeleted(id)}
           onEdit={() => onEdit(id)}
           onInputChange={(newInputValue) => onInputChange(id, newInputValue)}
           onInputSubmit={() => onInputSubmit(id)}
+          onTick={() => onTick(id)}
+          onStartTimer={() => onStartTimer(id)}
+          onStopTimer={() => onStopTimer(id)}
         />
       );
     });
