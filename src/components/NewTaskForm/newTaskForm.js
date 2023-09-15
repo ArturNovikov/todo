@@ -6,12 +6,10 @@ import './newTaskForm.css';
 export default class NewTaskForm extends Component {
   static propTypes = {
     onItemAdded: PropTypes.func,
-    onTimeAdded: PropTypes.func,
   };
 
   static defaultProps = {
     onItemAdded: () => {},
-    onTimeAdded: () => {},
   };
 
   state = {
@@ -22,7 +20,6 @@ export default class NewTaskForm extends Component {
   };
 
   onSubmit = (e) => {
-    console.log('Form submitted');
     e.preventDefault();
 
     if (!this.state.description.trim()) {
@@ -31,7 +28,6 @@ export default class NewTaskForm extends Component {
     }
 
     this.props.onItemAdded(this.state.description, this.state.min, this.state.sec);
-    this.props.onTimeAdded(this.state.min, this.state.sec);
     this.setState({
       description: '',
       min: '',
@@ -48,15 +44,29 @@ export default class NewTaskForm extends Component {
   };
 
   onMinChange = (e) => {
+    const value = e.target.value;
+
+    if (!/^\d*$/.test(value)) {
+      this.setState({ error: 'Only numbers are allowed!' });
+      return;
+    }
+
     this.setState({
-      min: Number(e.target.value),
+      min: value ? Number(value) : null,
       error: null,
     });
   };
 
   onSecChange = (e) => {
+    const value = e.target.value;
+
+    if (!/^\d*$/.test(value)) {
+      this.setState({ error: 'Only numbers are allowed!' });
+      return;
+    }
+
     this.setState({
-      sec: Number(e.target.value),
+      sec: value ? Number(value) : null,
       error: null,
     });
   };
@@ -88,14 +98,14 @@ export default class NewTaskForm extends Component {
           onChange={this.onMinChange}
         />
         <input
-          onKeyDown={this.handleKeyDown}
           required
           className="new-todo-form__timer"
           placeholder="Sec"
           value={this.state.sec}
           onChange={this.onSecChange}
+          onKeyDown={this.handleKeyDown}
         />
-        {this.state.error && <div style={{ color: 'red' }}>{this.state.error}</div>}
+        {this.state.error && <div className="error">{this.state.error}</div>}
       </form>
     );
   }

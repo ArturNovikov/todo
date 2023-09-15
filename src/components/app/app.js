@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
-import AppHeader from '../appHeader';
+import AppHeader from '../AppHeader';
 import TaskList from '../TaskList';
 import Footer from '../Footer';
 import './app.css';
@@ -85,15 +85,26 @@ export default class App extends Component {
   };
 
   addItem = (text, min, sec) => {
+    let timerValue = 0;
+
+    if (min && !sec) {
+      timerValue = Number(min) * 60;
+    } else if (!min && sec) {
+      timerValue = Number(sec);
+    } else if (min && sec) {
+      timerValue = Number(min) * 60 + Number(sec);
+    }
+
     const newItem = {
       description: text,
       completed: false,
       status: 'active',
       id: this.maxId++,
       created: new Date().toISOString(),
-      timer: 0,
+      timer: timerValue,
       isRunning: false,
-      timerAdded: Number(min) * 60 + Number(sec),
+      initialTimer: timerValue,
+      countingUp: timerValue === 0,
     };
 
     this.setState(({ tasks }) => {
@@ -117,25 +128,28 @@ export default class App extends Component {
     }));
   };
 
-  onResetTimer = (id) => {
-    this.setState(({ tasks }) => ({
-      tasks: tasks.map((task) => (task.id !== id ? task : { ...task, isRunning: false, timer: 0 })),
-    }));
-  };
-
   onTick = (id) => {
     this.setState(({ tasks }) => ({
       tasks: tasks.map((task) => {
-        if (task.id !== id) {
+        if (task.id !== id || !task.isRunning) {
           return task;
         }
-        return { ...task, timer: task.timer + 1 };
+
+        if (task.countingUp) {
+          return { ...task, timer: task.timer + 1 };
+        }
+
+        if (task.timer > 0) {
+          return { ...task, timer: task.timer - 1 };
+        }
+
+        if (task.timer === 0 && task.initialTimer > 0) {
+          return { ...task, isRunning: false };
+        }
+
+        return task;
       }),
     }));
-  };
-
-  handleNewTime = (min, sec) => {
-    console.log(min, sec);
   };
 
   render() {
@@ -149,10 +163,7 @@ export default class App extends Component {
         <section className="todoapp">
           <header className="header">
             <AppHeader />
-            <NewTaskForm
-              onItemAdded={(text, min, sec) => this.addItem(text, min, sec)}
-              onTimeAdded={this.handleNewTime}
-            />
+            <NewTaskForm onItemAdded={(text, min, sec) => this.addItem(text, min, sec)} />
           </header>
           <section className="main">
             <TaskList

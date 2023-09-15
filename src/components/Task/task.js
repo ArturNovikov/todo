@@ -9,6 +9,7 @@ import './task.css';
 
 export default class Task extends Component {
   static propTypes = {
+    id: PropTypes.number.isRequired,
     description: PropTypes.string,
     completed: PropTypes.bool,
     status: PropTypes.string,
@@ -23,21 +24,20 @@ export default class Task extends Component {
     onTick: PropTypes.func,
     onStartTimer: PropTypes.func,
     onStopTimer: PropTypes.func,
-    id: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
     description: `I'am your task! Please, describe me!`,
     completed: false,
     status: 'active',
+    created: new Date().toISOString(),
+    timer: 0,
+    isRunning: false,
     onStatusChange: () => {},
     onDeleted: () => {},
     onEdit: () => {},
     onInputChange: () => {},
     onInputSubmit: () => {},
-    created: new Date().toISOString(),
-    timer: 0,
-    isRunning: false,
     onTick: () => {},
     onStartTimer: () => {},
     onStopTimer: () => {},

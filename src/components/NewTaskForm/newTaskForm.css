@@ -45,3 +45,10 @@ input.new-todo {
   width: 15%;
   padding-left: 0px;
 }
+
+.error {
+  color: red;
+  position: absolute;
+  left: 35%;
+  top: 22.5px;
+}

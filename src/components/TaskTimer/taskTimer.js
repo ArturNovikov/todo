@@ -5,12 +5,13 @@ export default class TaskTimer extends Component {
   static propTypes = {
     timer: PropTypes.number,
     isRunning: PropTypes.bool,
-    onTick: PropTypes.func.isRequired,
+    onTick: PropTypes.func,
   };
 
   static defaultProps = {
     timer: 0,
     isRunning: false,
+    onTick: () => {},
   };
 
   timerID = null;
