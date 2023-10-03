@@ -1,47 +1,41 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default class TaskTimer extends Component {
-  static propTypes = {
-    timer: PropTypes.number,
-    isRunning: PropTypes.bool,
-    onTick: PropTypes.func,
-  };
+function TaskTimer({ timer = 0, isRunning = false, onTick = () => {} }) {
+  const [timerID, setTimerID] = useState(null);
 
-  static defaultProps = {
-    timer: 0,
-    isRunning: false,
-    onTick: () => {},
-  };
-
-  timerID = null;
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isRunning && !prevProps.isRunning) {
-      this.startTimer();
-    } else if (!this.props.isRunning && prevProps.isRunning) {
-      this.stopTimer();
+  useEffect(() => {
+    if (isRunning) {
+      startTimer();
+    } else {
+      stopTimer();
     }
-  }
 
-  componentWillUnmount() {
-    this.stopTimer();
-  }
+    return () => {
+      stopTimer();
+    };
+  }, [isRunning]);
 
-  startTimer = () => {
-    this.timerID = setInterval(() => {
-      this.props.onTick();
+  const startTimer = () => {
+    const id = setInterval(() => {
+      onTick();
     }, 1000);
+    setTimerID(id);
   };
 
-  stopTimer = () => {
-    clearInterval(this.timerID);
-    this.timerID = null;
+  const stopTimer = () => {
+    clearInterval(timerID);
+    setTimerID(null);
   };
 
-  render() {
-    const { timer } = this.props;
-    const timerForm = `${String(Math.floor(timer / 60)).padStart(2, '0')}:${String(timer % 60).padStart(2, '0')}`;
-    return <>{timerForm}</>;
-  }
+  const timerForm = `${String(Math.floor(timer / 60)).padStart(2, '0')}:${String(timer % 60).padStart(2, '0')}`;
+  return <>{timerForm}</>;
 }
+
+TaskTimer.propTypes = {
+  timer: PropTypes.number,
+  isRunning: PropTypes.bool,
+  onTick: PropTypes.func,
+};
+
+export default TaskTimer;
