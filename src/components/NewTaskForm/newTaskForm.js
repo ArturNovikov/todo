@@ -37,7 +37,7 @@ function NewTaskForm({ onItemAdded = () => {} }) {
       return;
     }
 
-    setMin(value ? Number(value) : null);
+    setMin(value ? Number(value) : '');
     setError(null);
   };
 
@@ -49,7 +49,7 @@ function NewTaskForm({ onItemAdded = () => {} }) {
       return;
     }
 
-    setSec(value ? Number(value) : null);
+    setSec(value ? Number(value) : '');
     setError(null);
   };
 
