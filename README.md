@@ -1,3 +1,2 @@
 Развёртка на Vercel:
-
-https://todo-one-blond.vercel.app/
+https://todo-movqa2y1o-arturnovikov.vercel.app/
