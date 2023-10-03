@@ -1,112 +1,97 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './newTaskForm.css';
 
-export default class NewTaskForm extends Component {
-  static propTypes = {
-    onItemAdded: PropTypes.func,
-  };
+function NewTaskForm({ onItemAdded = () => {} }) {
+  const [description, setDescription] = useState('');
+  const [min, setMin] = useState('');
+  const [sec, setSec] = useState('');
+  const [error, setError] = useState(null);
 
-  static defaultProps = {
-    onItemAdded: () => {},
-  };
-
-  state = {
-    description: '',
-    min: '',
-    sec: '',
-    error: null,
-  };
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.state.description.trim()) {
-      this.setState({ error: 'Task cannot be empty!' });
+    if (!description.trim()) {
+      setError('Task cannot be empty!');
       return;
     }
 
-    this.props.onItemAdded(this.state.description, this.state.min, this.state.sec);
-    this.setState({
-      description: '',
-      min: '',
-      sec: '',
-      error: null,
-    });
+    onItemAdded(description, min, sec);
+    setDescription('');
+    setMin('');
+    setSec('');
+    setError(null);
   };
 
-  onDescriptionChange = (e) => {
-    this.setState({
-      description: e.target.value,
-      error: null,
-    });
+  const onDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setError(null);
   };
 
-  onMinChange = (e) => {
+  const onMinChange = (e) => {
     const value = e.target.value;
 
     if (!/^\d*$/.test(value)) {
-      this.setState({ error: 'Only numbers are allowed!' });
+      setError('Only numbers are allowed!');
       return;
     }
 
-    this.setState({
-      min: value ? Number(value) : null,
-      error: null,
-    });
+    setMin(value ? Number(value) : null);
+    setError(null);
   };
 
-  onSecChange = (e) => {
+  const onSecChange = (e) => {
     const value = e.target.value;
 
     if (!/^\d*$/.test(value)) {
-      this.setState({ error: 'Only numbers are allowed!' });
+      setError('Only numbers are allowed!');
       return;
     }
 
-    this.setState({
-      sec: value ? Number(value) : null,
-      error: null,
-    });
+    setSec(value ? Number(value) : null);
+    setError(null);
   };
 
-  handleKeyDown = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      this.onSubmit(e);
+      onSubmit(e);
     }
   };
-
-  render() {
-    return (
-      <form type="submit" className="new-todo-form" onSubmit={this.onSubmit}>
-        <input
-          required
-          className="new-todo"
-          placeholder="Task"
-          autoFocus
-          value={this.state.description}
-          onChange={this.onDescriptionChange}
-          onKeyDown={this.handleKeyDown}
-        />
-        <input
-          onKeyDown={this.handleKeyDown}
-          required
-          className="new-todo-form__timer"
-          placeholder="Min"
-          value={this.state.min}
-          onChange={this.onMinChange}
-        />
-        <input
-          required
-          className="new-todo-form__timer"
-          placeholder="Sec"
-          value={this.state.sec}
-          onChange={this.onSecChange}
-          onKeyDown={this.handleKeyDown}
-        />
-        {this.state.error && <div className="error">{this.state.error}</div>}
-      </form>
-    );
-  }
+  return (
+    <form type="submit" className="new-todo-form" onSubmit={onSubmit}>
+      <input
+        required
+        className="new-todo"
+        placeholder="Task"
+        autoFocus
+        value={description}
+        onChange={onDescriptionChange}
+        onKeyDown={handleKeyDown}
+      />
+      <input
+        onKeyDown={handleKeyDown}
+        required
+        className="new-todo-form__timer"
+        placeholder="Min"
+        value={min}
+        onChange={onMinChange}
+      />
+      <input
+        required
+        className="new-todo-form__timer"
+        placeholder="Sec"
+        value={sec}
+        onChange={onSecChange}
+        onKeyDown={handleKeyDown}
+      />
+      {error && <div className="error">{error}</div>}
+    </form>
+  );
 }
+
+NewTaskForm.propTypes = {
+  onItemAdded: PropTypes.func,
+};
+
+export default NewTaskForm;
