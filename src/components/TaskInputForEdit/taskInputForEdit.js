@@ -1,67 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './taskInputForEdit.css';
-export default class TaskInputForEdit extends Component {
-  static propTypes = {
-    description: PropTypes.string,
-    onInputSubmit: PropTypes.func,
-    onInputChange: PropTypes.func,
-  };
 
-  static defaultProps = {
-    description: `I'm your task! Please, edit me!`,
-    onInputSubmit: () => {},
-    onInputChange: () => {},
-  };
+function TaskInputForEdit({
+  description = `I'm your task! Please, edit me!`,
+  onInputSubmit = () => {},
+  onInputChange = () => {},
+}) {
+  const [inputValue, setInputValue] = useState(description);
+  const [error, setError] = useState(null);
 
-  state = {
-    inputValue: this.props.description,
-    error: null,
-  };
+  useEffect(() => {
+    setInputValue(description);
+    setError(null);
+  }, [description]);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.description !== prevProps.description) {
-      this.setState({
-        inputValue: this.props.description,
-        error: null,
-      });
-    }
-  }
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.inputValue.trim()) {
-      this.setState({ error: 'Task cannot be empty!' });
+    if (!inputValue.trim()) {
+      setError('Task cannot be empty!');
       return;
     }
-    this.props.onInputSubmit();
+    onInputSubmit();
   };
 
-  onChangeInput = (e) => {
+  const onChangeInput = (e) => {
     const newInputValue = e.target.value;
-    this.setState({
-      inputValue: newInputValue,
-    });
-
-    this.props.onInputChange(newInputValue);
+    setInputValue(newInputValue);
+    onInputChange(newInputValue);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="editingTaskForm"
-          type="text"
-          className="edit"
-          value={this.state.inputValue}
-          onChange={this.onChangeInput}
-        />
-        {this.state.error && (
-          <div className="error" style={{ color: 'red', fontSize: '14px', lineHeight: '1.4em', fontWeight: 300 }}>
-            {this.state.error}
-          </div>
-        )}
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={onSubmit}>
+      <input name="editingTaskForm" type="text" className="edit" value={inputValue} onChange={onChangeInput} />
+      {error && (
+        <div className="error" style={{ color: 'red', fontSize: '14px', lineHeight: '1.4em', fontWeight: 300 }}>
+          {error}
+        </div>
+      )}
+    </form>
+  );
 }
+
+TaskInputForEdit.propTypes = {
+  description: PropTypes.string,
+  onInputSubmit: PropTypes.func,
+  onInputChange: PropTypes.func,
+};
+
+export default TaskInputForEdit;
